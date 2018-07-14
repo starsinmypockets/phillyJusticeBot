@@ -39,15 +39,8 @@ let postQueue = {
 }
 
 function run () {
-  // open stream
+  // open stream - check for errors
   
-  // arm stream 
-  
-  
-  Content.get(`${apiURL}/tweet`, function (data, response) {
-    console.log(data)
-    tweet(data[0].Body)
-  })
 }
 
 function log (msg) {
@@ -68,7 +61,10 @@ function postAtInterval () {
         }
       })
     } else {
-      // get more posts
+      // if postQueue is empty, get more posts from API
+      getAPIPosts((err, data) => {
+        postQueue.push(posts)
+      })
     }
   }, config.postInterval)
 }
@@ -103,6 +99,10 @@ function tweet (tweet, cb) {
   })
 }
 
+function retweet() {
+
+}
+
 function search (opts, cb) {
   T.search()
 }
@@ -118,10 +118,10 @@ function unpublish (data) {
 	}); 
 }
 
-function add () {
-
+function getAPIPosts () {
+  // config.APIPostBatchSize
 }
 
-function delete () {
-
+function savePosts (posts) => {
+  // save posts to api - yagni
 }
